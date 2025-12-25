@@ -7,3 +7,8 @@ archive/
 tmp.ipynb
 *.duckdb
 __pycache__/
+DEPLOYMENT.md
+Dockerfile
+docker-compose.yml
+.dockerignore
+.gitignore
