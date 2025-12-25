@@ -1,0 +1,25 @@
+# Git
+.git
+.gitignore
+.github
+
+# Dependencies
+node_modules
+frontend/node_modules
+backend/venv
+backend/__pycache__
+
+# Environment
+.env
+
+# Editor
+.vscode
+.idea
+
+# Build output
+frontend/dist
+backend/static
+
+# Notes: 
+# We explicitly do NOT ignore faiss_index/ and .duckdb here 
+# because we want to COPY them into the image.

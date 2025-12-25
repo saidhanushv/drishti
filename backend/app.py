@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse, Response
+from fastapi.responses import StreamingResponse, Response, FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from main import PromotionAnalysisSystem
 import os
@@ -12,14 +13,17 @@ from fastapi import HTTPException
 
 app = FastAPI()
 
-# Add CORS middleware - ADD THIS SECTION
+# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200"],  # Angular dev server
+    allow_origins=["http://localhost:4200", "https://*.onrender.com", "https://*.azurewebsites.net"],
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods (GET, POST, etc.)
-    allow_headers=["*"],  # Allows all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
+
+# Static file serving for production
+# Static file serving for production (moved to bottom)
 
 class QueryRequest(BaseModel):
     question: str
@@ -31,9 +35,21 @@ current_csv_path = None
 async def startup_event():
     global system, current_csv_path
     
-    # Check for file updates from ADLS
-    adls = ADLSManager()
-    local_path, is_new = adls.sync_latest_file()
+    # Check for file updates from ADLS (unless skipped)
+    if os.getenv("SKIP_ADLS_SYNC", "false").lower() == "true":
+        print("Startup: Skipping ADLS sync (SKIP_ADLS_SYNC=true)")
+        local_path = None
+        # Find any local CSV to use
+        import glob
+        local_csvs = glob.glob("downloads/*.csv")
+        if local_csvs:
+            local_path = local_csvs[0]
+            print(f"Startup: Found local file: {local_path}")
+        
+        is_new = False
+    else:
+        adls = ADLSManager()
+        local_path, is_new = adls.sync_latest_file()
     
     # Store globally so other endpoints can use it
     current_csv_path = local_path if local_path else "downloads/part-00000-tid-8397012257644732603-1200992a-2c19-4df8-a301-752e4b275d40-52-1-c000.csv"
@@ -117,3 +133,25 @@ async def get_csv_data():
         return {"error": "CSV file not found"}
     except Exception as e:
         return {"error": str(e)}
+
+# Static file serving for production
+if os.getenv("ENVIRONMENT") == "production":
+    if os.path.exists("static"):
+        app.mount("/static", StaticFiles(directory="static"), name="static")
+
+        @app.get("/{full_path:path}")
+        async def serve_spa(full_path: str):
+            # API routes are handled automatically before this catch-all
+            # This check is technically redundant if defined last, but good for safety
+            if full_path.startswith("api/") or full_path.startswith("query") or full_path.startswith("admin/") or full_path.startswith("data/"):
+                raise HTTPException(status_code=404, detail="Not Found")
+            
+            # Serve static files if they exist directly (e.g., assets)
+            possible_path = os.path.join("static", full_path)
+            if os.path.isfile(possible_path):
+                return FileResponse(possible_path)
+            
+            # Fallback to index.html for Angular routing
+            return FileResponse("static/index.html")
+    else:
+        print("Warning: 'static' directory not found. Frontend will not be served.")

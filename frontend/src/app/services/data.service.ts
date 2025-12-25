@@ -20,7 +20,8 @@ export class DataService {
    */
   private loadPromotionsFromCSV(): void {
     // Load from backend API (dynamically served from ADLS/local storage)
-    this.http.get('http://localhost:8000/data/csv', { responseType: 'text' }).subscribe({
+    // Use relative path so it works with whatever host/port the app is served on
+    this.http.get('/data/csv', { responseType: 'text' }).subscribe({
       next: (csvText) => {
         console.log('CSV loaded, size:', csvText.length);
         const promotions = this.parseCSV(csvText);

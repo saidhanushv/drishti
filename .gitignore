@@ -5,6 +5,5 @@ frontend_architecture_implementation.md.resolved
 faiss_index/
 archive/
 tmp.ipynb
-Dockerfile
 *.duckdb
 __pycache__/

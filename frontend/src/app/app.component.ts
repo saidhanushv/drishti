@@ -31,8 +31,8 @@ export class AppComponent implements OnInit {
   streamingMessage = '';
 
   // Backend API
-  private apiUrl = 'http://127.0.0.1:8000/query';
-  private streamUrl = 'http://127.0.0.1:8000/query/stream';
+  private apiUrl = '/query';
+  private streamUrl = '/query/stream';
 
   constructor(
     private http: HttpClient,
@@ -95,7 +95,7 @@ export class AppComponent implements OnInit {
     } catch (err) {
       this.messages.push({
         text:
-          '⚠️ Unable to reach backend. Make sure API is running at http://127.0.0.1:8000/query',
+          '⚠️ Unable to reach backend. Please check your connection.',
         isUser: false,
         timestamp: new Date()
       });
