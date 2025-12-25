@@ -1,0 +1,35 @@
+# Core dependencies
+pandas>=2.0.0
+numpy>=1.24.0
+duckdb>=0.9.0
+
+# LangChain and LLM
+langchain>=0.1.0
+langchain-openai>=0.0.5
+langchain-community>=0.0.20
+langgraph>=0.1.0
+openai==1.109.1
+
+# Vector store and embeddings
+faiss-cpu>=1.7.4  # Use faiss-gpu if you have GPU support
+tiktoken>=0.5.0
+
+# ML libraries
+flaml>=2.1.0
+scikit-learn>=1.3.0
+xgboost>=2.0.0
+lightgbm>=4.0.0
+
+# Optional: Alternative AutoML (uncomment if preferred)
+# auto-sklearn>=0.15.0
+
+# Utilities
+python-dotenv>=1.0.0
+
+# Docker
+uvicorn[standard]>=0.24.0
+fastapi>=0.104.0
+
+# Azure
+azure-storage-file-datalake
+azure-identity

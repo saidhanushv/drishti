@@ -1,0 +1,124 @@
+.gantt-page {
+    max-width: 100%;
+    height: 100%;
+}
+
+.page-header-modern {
+    margin-bottom: 2rem;
+}
+
+.chart-container {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: 1.5rem;
+    height: 100%;
+    border: 1px solid var(--border-light);
+}
+
+.gantt-chart {
+    width: 100%;
+    height: 550px;
+}
+
+/* KPI Sidebar */
+.kpi-sidebar {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: 1.5rem;
+    height: 100%;
+    max-height: 598px;
+    overflow-y: auto;
+    border: 1px solid var(--border-light);
+}
+
+.sidebar-title {
+    color: var(--text-dark);
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.kpi-card-sidebar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    background: linear-gradient(135deg, var(--bg-white) 0%, var(--bg-light) 100%);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--primary-blue);
+    border: 1px solid var(--border-light);
+    border-left-width: 4px;
+    /* Stronger left border */
+    transition: all 0.3s ease;
+}
+
+.kpi-card-sidebar:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow-md);
+    border-left-color: var(--primary-cyan);
+    background: #fff;
+}
+
+.kpi-icon-small {
+    font-size: 1.5rem;
+    opacity: 0.9;
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.kpi-content {
+    flex: 1;
+}
+
+.kpi-value-small {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 2px;
+}
+
+.kpi-label-small {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+/* Scrollbar styling for sidebar */
+.kpi-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.kpi-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.kpi-sidebar::-webkit-scrollbar-thumb {
+    background-color: var(--text-muted);
+    border-radius: 20px;
+    opacity: 0.3;
+}
+
+/* Responsive Design */
+@media (max-width: 991px) {
+    .gantt-chart {
+        height: 500px;
+    }
+
+    .kpi-sidebar {
+        max-height: none;
+        margin-top: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .gantt-chart {
+        height: 400px;
+    }
+}

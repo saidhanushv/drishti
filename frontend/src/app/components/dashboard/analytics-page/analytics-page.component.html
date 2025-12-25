@@ -1,0 +1,44 @@
+<div class="analytics-page">
+    <div class="page-header-modern">
+        <h2 class="gradient-text">📈 Analytics</h2>
+        <p class="page-description">Key metrics and performance insights</p>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-icon">💰</div>
+            <div class="kpi-value">${{ (kpis.totalGrossProfit / 1000000).toFixed(2) }}M</div>
+            <div class="kpi-label">Total Gross Profit</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-icon">📊</div>
+            <div class="kpi-value">${{ (kpis.totalSalesValue / 1000000).toFixed(2) }}M</div>
+            <div class="kpi-label">Total Sales Value</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-icon">📈</div>
+            <div class="kpi-value">{{ kpis.averageROI.toFixed(1) }}%</div>
+            <div class="kpi-label">Average ROI</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-icon">🎯</div>
+            <div class="kpi-value">{{ kpis.totalPromotions }}</div>
+            <div class="kpi-label">Total Promotions</div>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-grid">
+        <div class="chart-container">
+            <div echarts [options]="topCustomersChartOption" class="chart"></div>
+        </div>
+        <div class="chart-container">
+            <div echarts [options]="roiByRegionChartOption" class="chart"></div>
+        </div>
+    </div>
+
+    <div class="chart-container full-width">
+        <div echarts [options]="salesTrendChartOption" class="chart-wide"></div>
+    </div>
+</div>

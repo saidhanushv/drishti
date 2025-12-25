@@ -1,0 +1,86 @@
+<div class="gantt-page">
+    <div class="page-header-modern">
+        <h2 class="gradient-text">📅 Promotion Timeline</h2>
+        <p class="page-description">Gantt chart showing promotion schedules with key metrics</p>
+    </div>
+
+    <div class="row g-4">
+        <!-- Main Chart Column -->
+        <div class="col-lg-8">
+            <div class="chart-container">
+                <div echarts [options]="chartOption" class="gantt-chart"></div>
+            </div>
+        </div>
+
+        <!-- KPI Sidebar -->
+        <div class="col-lg-4">
+            <div class="kpi-sidebar">
+                <h5 class="sidebar-title">📊 Key Metrics</h5>
+
+                <div class="kpi-card-sidebar">
+                    <div class="kpi-icon-small">🎯</div>
+                    <div class="kpi-content">
+                        <div class="kpi-value-small">{{ kpis.totalEvents }}</div>
+                        <div class="kpi-label-small">Total Events</div>
+                    </div>
+                </div>
+
+                <div class="kpi-card-sidebar">
+                    <div class="kpi-icon-small">💵</div>
+                    <div class="kpi-content">
+                        <div class="kpi-value-small">${{ (kpis.actualEventSpent / 1000000).toFixed(2) }}M</div>
+                        <div class="kpi-label-small">Actual Event Spent</div>
+                    </div>
+                </div>
+
+                <div class="kpi-card-sidebar">
+                    <div class="kpi-icon-small">📋</div>
+                    <div class="kpi-content">
+                        <div class="kpi-value-small">${{ (kpis.plannedEventSpent / 1000000).toFixed(2) }}M</div>
+                        <div class="kpi-label-small">Planned Event Spent</div>
+                    </div>
+                </div>
+
+                <div class="kpi-card-sidebar">
+                    <div class="kpi-icon-small">📈</div>
+                    <div class="kpi-content">
+                        <div class="kpi-value-small">{{ kpis.avgROI.toFixed(1) }}%</div>
+                        <div class="kpi-label-small">Average ROI</div>
+                    </div>
+                </div>
+
+                <div class="kpi-card-sidebar">
+                    <div class="kpi-icon-small">💰</div>
+                    <div class="kpi-content">
+                        <div class="kpi-value-small">${{ (kpis.totalGrossProfit / 1000000).toFixed(2) }}M</div>
+                        <div class="kpi-label-small">Total Gross Profit</div>
+                    </div>
+                </div>
+
+                <div class="kpi-card-sidebar">
+                    <div class="kpi-icon-small">📊</div>
+                    <div class="kpi-content">
+                        <div class="kpi-value-small">{{ kpis.avgSalesUplift.toFixed(1) }}%</div>
+                        <div class="kpi-label-small">Avg Sales Value Uplift</div>
+                    </div>
+                </div>
+
+                <div class="kpi-card-sidebar">
+                    <div class="kpi-icon-small">🚀</div>
+                    <div class="kpi-content">
+                        <div class="kpi-value-small">{{ (kpis.incrementalSales / 1000).toFixed(0) }}K</div>
+                        <div class="kpi-label-small">Incremental Sales</div>
+                    </div>
+                </div>
+
+                <div class="kpi-card-sidebar">
+                    <div class="kpi-icon-small">💎</div>
+                    <div class="kpi-content">
+                        <div class="kpi-value-small">{{ kpis.avgGrossMargin.toFixed(1) }}%</div>
+                        <div class="kpi-label-small">Avg Gross Margin</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

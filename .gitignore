@@ -1,0 +1,10 @@
+.env
+node_modules/
+color_schema_changes.md.resolved
+frontend_architecture_implementation.md.resolved
+faiss_index/
+archive/
+tmp.ipynb
+Dockerfile
+*.duckdb
+__pycache__/

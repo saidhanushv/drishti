@@ -1,0 +1,85 @@
+<!-- Dashboard Container - Full Screen -->
+<router-outlet></router-outlet>
+
+<!-- Floating Chat Button -->
+<button class="chat-toggle-btn" (click)="toggleChat()" [class.chat-open]="isChatOpen">
+  <svg *ngIf="!isChatOpen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+  </svg>
+  <svg *ngIf="isChatOpen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"></line>
+    <line x1="6" y1="6" x2="18" y2="18"></line>
+  </svg>
+</button>
+
+<!-- Chat Offcanvas -->
+<div class="offcanvas offcanvas-end" [class.show]="isChatOpen" tabindex="-1">
+  <div class="offcanvas-header">
+    <div class="d-flex align-items-center">
+      <!-- V LOGO -->
+      <div class="avatar svg-avatar">
+        <img src="drishti_logo.svg" alt="Drishti Logo" width="45" height="45">
+      </div>
+      <!-- END V LOGO -->
+      <div class="ms-3">
+        <h5 class="offcanvas-title assistant-name mb-0">Drishti</h5>
+        <small class="assistant-tagline">Vision. Insight. Action.</small>
+      </div>
+    </div>
+    <button type="button" class="btn-close fancy-close" aria-label="Close Drishti assistant" (click)="toggleChat()">
+    </button>
+  </div>
+
+  <div class="offcanvas-body d-flex flex-column p-0">
+    <!-- Chat Messages -->
+    <div #chatBody class="chat-body flex-grow-1 p-3">
+      <div *ngFor="let message of messages; let i = index" class="message-wrapper" [class.user-message]="message.isUser"
+        [class.ai-message]="!message.isUser"
+        [style.display]="(!message.isUser && !message.text && isLoading && i === messages.length - 1) ? 'none' : 'flex'">
+        <div class="message">
+          <div class="message-content" [innerHTML]="formatMessage(message.text)"></div>
+          <div class="message-time">
+            {{ message.timestamp | date:'shortTime' }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading Indicator -->
+      <div *ngIf="isLoading" class="message-wrapper ai-message">
+        <div class="message">
+          <div class="loading-container">
+            <div *ngIf="currentStatus" class="status-message">
+              {{ currentStatus }}
+            </div>
+            <div class="typing-indicator">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Input -->
+    <div class="chat-input-container">
+      <div class="input-group">
+        <textarea class="form-control chat-input" placeholder="Ask Drishti anything about your data..."
+          [(ngModel)]="userMessage" (keypress)="handleKeyPress($event)" [disabled]="isLoading" rows="1"></textarea>
+        <button class="btn btn-primary send-btn" (click)="sendMessage()" [disabled]="!userMessage.trim() || isLoading">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Backdrop -->
+<div *ngIf="isChatOpen" class="offcanvas-backdrop fade show" (click)="toggleChat()">
+</div>
