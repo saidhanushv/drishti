@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, isDevMode } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { LlmParserService } from './services/llm-parser.service';
+import { AuthService } from './services/auth.service';
 
 interface ChatMessage {
   text: string;
@@ -31,13 +32,17 @@ export class AppComponent implements OnInit {
   streamingMessage = '';
 
   // Backend API
-  private apiUrl = '/query';
-  private streamUrl = '/query/stream';
+  private get baseUrl() {
+    return isDevMode() ? 'http://localhost:8000' : '';
+  }
+  private get apiUrl() { return `${this.baseUrl}/query`; }
+  private get streamUrl() { return `${this.baseUrl}/query/stream`; }
 
   constructor(
     private http: HttpClient,
     private router: Router,
-    private llmParser: LlmParserService
+    private llmParser: LlmParserService,
+    public authService: AuthService
   ) { }
 
   ngOnInit(): void {

@@ -33,3 +33,20 @@ fastapi>=0.104.0
 # Azure
 azure-storage-file-datalake
 azure-identity
+
+# Authentication
+python-jose[cryptography]
+passlib[bcrypt]
+email-validator
+python-multipart
+bcrypt==3.2.2
+
+# Database Drivers
+pyodbc
+
+# Azure Credentials
+sqlalchemy
+pyodbc
+passlib[bcrypt]
+python-jose[cryptography]
+python-multipart

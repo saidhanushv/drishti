@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, map } from 'rxjs';
 import { Promotion } from '../models/promotion.model';
@@ -20,8 +20,9 @@ export class DataService {
    */
   private loadPromotionsFromCSV(): void {
     // Load from backend API (dynamically served from ADLS/local storage)
-    // Use relative path so it works with whatever host/port the app is served on
-    this.http.get('/data/csv', { responseType: 'text' }).subscribe({
+    // Use dynamic URL based on environment
+    const baseUrl = isDevMode() ? 'http://localhost:8000' : '';
+    this.http.get(`${baseUrl}/data/csv`, { responseType: 'text' }).subscribe({
       next: (csvText) => {
         console.log('CSV loaded, size:', csvText.length);
         const promotions = this.parseCSV(csvText);

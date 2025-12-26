@@ -1,54 +1,35 @@
-# ==========================================
-# Stage 1: Build Frontend (Angular)
-# ==========================================
-FROM node:20-alpine AS frontend-build
-
+# Stage 1: Build Frontend
+FROM node:18-alpine as frontend-build
 WORKDIR /app/frontend
-
-# Copy package files first for better caching
 COPY frontend/package*.json ./
 RUN npm ci
+COPY frontend/ .
+RUN npm run build -- --configuration=production
 
-# Copy source code
-COPY frontend/ ./
-
-# Build the application
-RUN npm run build
-
-# ==========================================
-# Stage 2: Build Backend & Final Image
-# ==========================================
-FROM python:3.10-slim
+# Stage 2: Backend Runtime
+FROM python:3.11-bullseye
 
 WORKDIR /app
-
-# Install system dependencies if needed
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy backend requirements
-COPY backend/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy Pre-computed Data
-COPY backend/faiss_index ./faiss_index
-COPY backend/promotion_data.duckdb ./promotion_data.duckdb
-COPY backend/downloads ./downloads
-
-# Copy Backend Code
-COPY backend/*.py ./
-COPY backend/app ./app
-COPY backend/tools ./tools
-
-# Copy Built Frontend from Stage 1
-COPY --from=frontend-build /app/frontend/dist/promo-accelerator-app/browser ./static
-
-# Expose port
-EXPOSE 8000
-
-# Set environment variable for production
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 ENV ENVIRONMENT=production
 
-# Run the application
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+# Install backend dependencies
+COPY backend/requirements.txt .
+# Install SQL Server drivers
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl gnupg2 build-essential unixodbc-dev g++ \
+    && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    && curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+    && apt-get update \
+    && ACCEPT_EULA=Y apt-get install -y msodbcsql17 \
+    && pip install --no-cache-dir -r requirements.txt \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY backend/ .
+# Copy built frontend assets
+COPY --from=frontend-build /app/frontend/dist/promo-accelerator-app/browser ./static
+
+EXPOSE 8000
+CMD ["uvicorn", "api_server:app", "--host", "0.0.0.0", "--port", "8000"]

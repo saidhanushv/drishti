@@ -2,7 +2,8 @@
 <router-outlet></router-outlet>
 
 <!-- Floating Chat Button -->
-<button class="chat-toggle-btn" (click)="toggleChat()" [class.chat-open]="isChatOpen">
+<button *ngIf="authService.currentUserValue" class="chat-toggle-btn" (click)="toggleChat()"
+  [class.chat-open]="isChatOpen">
   <svg *ngIf="!isChatOpen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -15,7 +16,7 @@
 </button>
 
 <!-- Chat Offcanvas -->
-<div class="offcanvas offcanvas-end" [class.show]="isChatOpen" tabindex="-1">
+<div *ngIf="authService.currentUserValue" class="offcanvas offcanvas-end" [class.show]="isChatOpen" tabindex="-1">
   <div class="offcanvas-header">
     <div class="d-flex align-items-center">
       <!-- V LOGO -->

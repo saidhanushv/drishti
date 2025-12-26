@@ -9,14 +9,23 @@ import json
 import asyncio
 
 from adls_manager import ADLSManager
+from fastapi import FastAPI, Depends
 from fastapi import HTTPException
+from app.auth import router as auth_router
+from app.database import engine
+from app import models
+
+# Create database tables
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+app.include_router(auth_router)
 
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200", "https://*.onrender.com", "https://*.azurewebsites.net"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

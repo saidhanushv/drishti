@@ -11,4 +11,9 @@ DEPLOYMENT.md
 Dockerfile
 docker-compose.yml
 .dockerignore
-.gitignore
+*.db
+*.wal
+*.log
+backend/venv/
+frontend/dist/
+downloads/

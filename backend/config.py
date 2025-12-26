@@ -33,7 +33,7 @@ class Config:
     AZURE_STORAGE_DIRECTORY: str = os.getenv("AZURE_STORAGE_DIRECTORY", "")
     
     # Model Configuration
-    LLM_MODEL: str = os.getenv("LLM_MODEL", "gpt-4o")
+    LLM_MODEL: str = os.getenv("LLM_MODEL", "gpt-4o-mini")
     EMBEDDING_MODEL: str = os.getenv("EMBEDDING_MODEL", "text-embedding-3-large")
     LLM_TEMPERATURE: float = 0.0  # Deterministic for analytical queries
     
