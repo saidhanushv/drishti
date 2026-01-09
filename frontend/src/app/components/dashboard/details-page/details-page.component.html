@@ -1,0 +1,118 @@
+<div class="details-page">
+    <div class="page-header-modern mb-3">
+        <h2 class="gradient-text fs-3 mb-0">Analytics Data View</h2>
+        <p class="page-description mb-0 fs-6">Comprehensive table view with advanced filtering</p>
+    </div>
+
+    <!-- Filter Panel - Compact -->
+    <div class="filter-panel p-3 mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="filter-title mb-0 fs-6">Filters</div>
+            <button class="btn btn-sm btn-link text-decoration-none p-0" (click)="clearFilters()">Reset All</button>
+        </div>
+        <div class="row g-2">
+            <div class="col-md-2">
+                <select class="form-select form-select-sm" [(ngModel)]="filters.region" (change)="applyFilters()">
+                    <option value="">Region: All</option>
+                    <option *ngFor="let region of availableRegions" [value]="region">{{ region }}</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select form-select-sm" [(ngModel)]="filters.customer" (change)="applyFilters()">
+                    <option value="">Customer: All</option>
+                    <option *ngFor="let customer of availableCustomers" [value]="customer">{{ customer }}</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select form-select-sm" [(ngModel)]="filters.product" (change)="applyFilters()">
+                    <option value="">Product: All</option>
+                    <option *ngFor="let product of availableProducts" [value]="product">{{ product }}</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select form-select-sm" [(ngModel)]="filters.status" (change)="applyFilters()">
+                    <option value="">Status: All</option>
+                    <option value="COMPLETED">Completed</option>
+                    <option value="ONGOING">Ongoing</option>
+                    <option value="PLANNED">Planned</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select form-select-sm" [(ngModel)]="filters.year" (change)="applyFilters()">
+                    <option value="">Year: All</option>
+                    <option *ngFor="let year of availableYears" [value]="year">{{ year }}</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select form-select-sm" [(ngModel)]="filters.ragStatus" (change)="applyFilters()">
+                    <option value="">RAG: All</option>
+                    <option value="GREEN">Green</option>
+                    <option value="AMBER">Amber</option>
+                    <option value="RED">Red</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- KPI Summary Cards - Compact -->
+    <div class="row g-3 mb-3">
+        <div class="col-md-3">
+            <div class="kpi-card-modern p-3">
+                <div class="d-flex align-items-center">
+                    <div class="kpi-icon fs-2 me-3 mb-0">🎯</div>
+                    <div>
+                        <div class="kpi-value fs-4 mb-0">{{ kpis.totalPromotions }}</div>
+                        <div class="kpi-label" style="font-size: 11px;">Total Promotions</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="kpi-card-modern p-3">
+                <div class="d-flex align-items-center">
+                    <div class="kpi-icon fs-2 me-3 mb-0">💰</div>
+                    <div>
+                        <div class="kpi-value fs-4 mb-0">${{ (kpis.totalSalesValue / 1000000).toFixed(2) }}M</div>
+                        <div class="kpi-label" style="font-size: 11px;">Total Sales Value</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="kpi-card-modern p-3">
+                <div class="d-flex align-items-center">
+                    <div class="kpi-icon fs-2 me-3 mb-0">📈</div>
+                    <div>
+                        <div class="kpi-value fs-4 mb-0">${{ (kpis.totalGrossProfit / 1000000).toFixed(2) }}M</div>
+                        <div class="kpi-label" style="font-size: 11px;">Total Gross Profit</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="kpi-card-modern p-3">
+                <div class="d-flex align-items-center">
+                    <div class="kpi-icon fs-2 me-3 mb-0">💡</div>
+                    <div>
+                        <div class="kpi-value fs-4 mb-0">{{ kpis.averageROI.toFixed(1) }}%</div>
+                        <div class="kpi-label" style="font-size: 11px;">Average ROI</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-container rounded-3 overflow-hidden shadow-sm" style="border: 1px solid rgba(0,0,0,0.05);">
+        <ag-grid-angular style="width: 100%; height: 500px;" class="ag-theme-alpine" [rowData]="rowData"
+            [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [gridOptions]="gridOptions"
+            [rowSelection]="'multiple'">
+        </ag-grid-angular>
+    </div>
+
+    <div class="grid-footer mt-2 d-flex justify-content-between align-items-center">
+        <p class="record-count small text-muted mb-0">Showing {{ rowData.length }} of {{ totalRecords }} records</p>
+        <button class="btn btn-sm btn-outline-secondary" (click)="onExportCsv()">
+            📥 Export to CSV
+        </button>
+    </div>
+</div>

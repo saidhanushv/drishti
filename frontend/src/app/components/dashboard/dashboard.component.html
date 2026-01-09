@@ -1,0 +1,31 @@
+<div class="dashboard-container">
+    <!-- Dashboard Header -->
+    <!-- Dashboard Header -->
+    <!-- Dashboard Header -->
+    <div class="dashboard-head-jumbo p-4 mb-4 rounded-3 shadow-sm glass-card"
+        style="background: rgba(255, 255, 255, 0.9); border: none;">
+        <div class="container-fluid py-2">
+            <h1 class="display-5 fw-bold gradient-text mb-2">Drishti Dashboard</h1>
+            <p class="col-md-8 fs-5 text-secondary">Intelligent Analytics & Promotion Insights</p>
+            <p class="small text-secondary mb-0 opacity-75">Navigate through the tabs below to explore different
+                dimensions of your
+                data.</p>
+        </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="dashboard-tabs">
+        <div class="tab-list">
+            <button *ngFor="let tab of tabs; let i = index" class="tab-button" [class.active]="activeTabIndex === i"
+                (click)="selectTab(i)">
+                <span class="tab-icon">{{ tab.icon }}</span>
+                <span class="tab-label">{{ tab.label }}</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <div class="dashboard-content">
+        <router-outlet></router-outlet>
+    </div>
+</div>

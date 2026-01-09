@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <!-- Soft, friendly gradient -->
+    <linearGradient id="friendlyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4facfe" /> <!-- Light Blue -->
+      <stop offset="50%" stop-color="#00f2fe" /> <!-- Cyan -->
+      <stop offset="100%" stop-color="#a18cd1" /> <!-- Soft Purple -->
+    </linearGradient>
+    
+    <!-- Glow/Shadow for depth -->
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+      <feOffset dx="2" dy="2" result="offsetblur" />
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.2" />
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Main Head Shape: Rounded Square/Squircle for stability but friendliness -->
+  <rect x="15" y="15" width="70" height="70" rx="25" fill="url(#friendlyGrad)" filter="url(#softGlow)" />
+
+  <!-- "Face" Area: White mostly, to look clean -->
+  <rect x="25" y="35" width="50" height="40" rx="15" fill="white" fill-opacity="0.9" />
+
+  <!-- Eyes: Wide set, oval, looking friendly -->
+  <ellipse cx="40" cy="50" rx="5" ry="7" fill="#453a59" />
+  <ellipse cx="60" cy="50" rx="5" ry="7" fill="#453a59" />
+  
+  <!-- Subtle Shine in Eyes -->
+  <circle cx="42" cy="48" r="2" fill="white" />
+  <circle cx="62" cy="48" r="2" fill="white" />
+
+  <!-- Antenna / Spark of Idea -->
+  <line x1="50" y1="15" x2="50" y2="5" stroke="#a18cd1" stroke-width="4" stroke-linecap="round" />
+  <circle cx="50" cy="5" r="4" fill="#ffc107" />
+
+</svg>

@@ -1,0 +1,152 @@
+<div class="rag-page">
+    <div class="page-header-modern">
+        <h2 class="gradient-text">🚦 RAG Status</h2>
+        <p class="page-description">Red, Amber, Green performance indicators</p>
+    </div>
+
+    <!-- Filter Panel -->
+    <div class="filter-panel p-3 mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="filter-title mb-0 fs-6">Filters</div>
+            <button class="btn btn-sm btn-link text-decoration-none p-0" (click)="clearFilters()">Reset All</button>
+        </div>
+        <div class="row g-2">
+            <div class="col-md-2">
+                <select class="form-select form-select-sm" [(ngModel)]="filters.year" (change)="applyFilters()">
+                    <option value="">Year: All</option>
+                    <option *ngFor="let year of availableYears" [value]="year">{{ year }}</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input type="date" class="form-control form-control-sm" placeholder="Start Date"
+                    [(ngModel)]="filters.startDate" (change)="applyFilters()">
+            </div>
+            <div class="col-md-2">
+                <input type="date" class="form-control form-control-sm" placeholder="End Date"
+                    [(ngModel)]="filters.endDate" (change)="applyFilters()">
+            </div>
+            <div class="col-md-2">
+                <select class="form-select form-select-sm" [(ngModel)]="filters.region" (change)="applyFilters()">
+                    <option value="">Region: All</option>
+                    <option *ngFor="let region of availableRegions" [value]="region">{{ region }}</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select form-select-sm" [(ngModel)]="filters.customer" (change)="applyFilters()">
+                    <option value="">Customer: All</option>
+                    <option *ngFor="let customer of availableCustomers" [value]="customer">{{ customer }}</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select form-select-sm" [(ngModel)]="filters.product" (change)="applyFilters()">
+                    <option value="">Product: All</option>
+                    <option *ngFor="let product of availableProducts" [value]="product">{{ product }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Aggregate KPI Cards - Compact -->
+    <div class="row g-3 mb-3">
+        <div class="col-md-2">
+            <div class="kpi-card-modern p-3">
+                <div class="d-flex align-items-center">
+                    <div class="kpi-icon fs-2 me-3 mb-0">✅</div>
+                    <div>
+                        <div class="kpi-value fs-4 mb-0">{{ aggregateKPIs.successCount }}</div>
+                        <div class="kpi-label" style="font-size: 11px;">Success Count</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="kpi-card-modern p-3">
+                <div class="d-flex align-items-center">
+                    <div class="kpi-icon fs-2 me-3 mb-0">🎯</div>
+                    <div>
+                        <div class="kpi-value fs-4 mb-0">{{ aggregateKPIs.totalEventCount }}</div>
+                        <div class="kpi-label" style="font-size: 11px;">Total Events</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="kpi-card-modern p-3">
+                <div class="d-flex align-items-center">
+                    <div class="kpi-icon fs-2 me-3 mb-0">💵</div>
+                    <div>
+                        <div class="kpi-value fs-4 mb-0">${{ (aggregateKPIs.totalEventSpent / 1000000).toFixed(2) }}M
+                        </div>
+                        <div class="kpi-label" style="font-size: 11px;">Event Spent</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="kpi-card-modern p-3">
+                <div class="d-flex align-items-center">
+                    <div class="kpi-icon fs-2 me-3 mb-0">📊</div>
+                    <div>
+                        <div class="kpi-value fs-4 mb-0">{{ aggregateKPIs.avgVolumeUplift.toFixed(1) }}%</div>
+                        <div class="kpi-label" style="font-size: 11px;">Avg Volume Uplift</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="kpi-card-modern p-3">
+                <div class="d-flex align-items-center">
+                    <div class="kpi-icon fs-2 me-3 mb-0">💰</div>
+                    <div>
+                        <div class="kpi-value fs-4 mb-0">{{ aggregateKPIs.avgValueUplift.toFixed(1) }}%</div>
+                        <div class="kpi-label" style="font-size: 11px;">Avg Value Uplift</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="kpi-card-modern p-3">
+                <div class="d-flex align-items-center">
+                    <div class="kpi-icon fs-2 me-3 mb-0">📈</div>
+                    <div>
+                        <div class="kpi-value fs-4 mb-0">{{ aggregateKPIs.avgROI.toFixed(1) }}%</div>
+                        <div class="kpi-label" style="font-size: 11px;">Average ROI</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RAG Count Cards -->
+    <div class="rag-cards">
+        <div class="rag-card green">
+            <div class="rag-icon">✓</div>
+            <div class="rag-count">{{ ragCounts.actual.green }}</div>
+            <div class="rag-label">Green</div>
+        </div>
+        <div class="rag-card amber">
+            <div class="rag-icon">⚠</div>
+            <div class="rag-count">{{ ragCounts.actual.amber }}</div>
+            <div class="rag-label">Amber</div>
+        </div>
+        <div class="rag-card red">
+            <div class="rag-icon">✕</div>
+            <div class="rag-count">{{ ragCounts.actual.red }}</div>
+            <div class="rag-label">Red</div>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-grid">
+        <div class="chart-container">
+            <div echarts [options]="actualGaugeOption" class="rag-chart"></div>
+        </div>
+        <div class="chart-container">
+            <div echarts [options]="plannedGaugeOption" class="rag-chart"></div>
+        </div>
+    </div>
+
+    <div class="chart-container full-width">
+        <div echarts [options]="comparisonChartOption" class="comparison-chart"></div>
+    </div>
+</div>

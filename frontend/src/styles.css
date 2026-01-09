@@ -1,0 +1,233 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* AG Grid Theme */
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-alpine.css';
+
+/* CSS Variables - Premium UI Theme */
+:root {
+    /* Primary Colors */
+    --primary-blue: #4facfe;
+    --primary-cyan: #00f2fe;
+    --primary-dark: #2c3e50;
+    --primary-text: #2c3e50;
+    --secondary-text: #64748b;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+    --gradient-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+
+    /* Backgrounds */
+    --bg-light: #f5f7fa;
+    --bg-white: #ffffff;
+    --bg-glass: rgba(255, 255, 255, 0.8);
+
+    /* Shadows */
+    --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.05);
+    --shadow-glow: 0 0 20px rgba(79, 172, 254, 0.3);
+
+    /* Spacing */
+    --spacing-xs: 8px;
+    --spacing-sm: 12px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+}
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--bg-light);
+    color: var(--primary-text);
+}
+
+/* Utility Classes */
+.gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.card-modern,
+.glass-card {
+    background: var(--bg-white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: var(--spacing-lg);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.card-modern:hover,
+.glass-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+/* KPI Card Styles - Updated */
+.kpi-card-modern {
+    background: var(--bg-white);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    border-left: 4px solid var(--primary-blue);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.kpi-card-modern:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-5px);
+    border-left-color: var(--primary-cyan);
+}
+
+.kpi-card-modern .kpi-icon {
+    font-size: 32px;
+    margin-bottom: var(--spacing-sm);
+    opacity: 1;
+}
+
+.kpi-card-modern .kpi-value {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--primary-dark);
+    margin-bottom: var(--spacing-xs);
+    letter-spacing: -0.02em;
+}
+
+.kpi-card-modern .kpi-label {
+    font-size: 13px;
+    color: var(--secondary-text);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+/* Filter Panel Styles - Updated */
+.filter-panel {
+    background: var(--bg-white);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-lg);
+    border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.filter-panel .filter-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+/* Bootstrap Form Overrides */
+.form-select,
+.form-control {
+    border-color: #e2e8f0;
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    font-size: 13px;
+    transition: all 0.2s ease;
+    background-color: #f8fafc;
+}
+
+.form-select:focus,
+.form-control:focus {
+    border-color: var(--primary-blue);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.15);
+}
+
+.form-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--secondary-text);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+/* Button Styles - Updated */
+.btn-primary-custom {
+    background: var(--gradient-primary);
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(79, 172, 254, 0.2);
+}
+
+.btn-primary-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(79, 172, 254, 0.3);
+}
+
+.btn-secondary-custom {
+    background: white;
+    border: 1px solid #e2e8f0;
+    color: var(--secondary-text);
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary-custom:hover {
+    transform: translateY(-1px);
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Page Header Styles */
+.page-header-modern {
+    margin-bottom: var(--spacing-lg);
+}
+
+.page-header-modern h2 {
+    color: var(--primary-dark);
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    letter-spacing: -0.02em;
+}
+
+.page-header-modern .page-description {
+    color: var(--secondary-text);
+    font-size: 14px;
+}
+
+/* Responsive Grid Utilities */
+@media (max-width: 768px) {
+    .filter-panel {
+        padding: var(--spacing-md);
+    }
+
+    .kpi-card-modern {
+        padding: var(--spacing-md);
+    }
+}
